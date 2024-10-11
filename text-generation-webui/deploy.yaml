@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: textgen-webui
+  labels:
+    app: textgen-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: textgen-webui
+  template:
+    metadata:
+      labels:
+        app: textgen-webui
+    spec:
+      containers:
+        - name: textgen-webui
+          image: caedus90/textgen-webui:rocm
+          ports:
+            - containerPort: 7860
+            - containerPort: 5000
+            - containerPort: 5005
+          resources:
+            limits:
+              amd.com/gpu: '1'  # Requesting one AMD GPU

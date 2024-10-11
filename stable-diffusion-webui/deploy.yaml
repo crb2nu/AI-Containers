@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stable-diffusion-webui
+  labels:
+    app: stable-diffusion-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stable-diffusion-webui
+  template:
+    metadata:
+      labels:
+        app: stable-diffusion-webui
+    spec:
+      containers:
+        - name: stable-diffusion-webui
+          image: caedus90/stable-diffusion-webui:rocm
+          ports:
+            - containerPort: 7862
+          resources:
+            limits:
+              amd.com/gpu: '1'  # Requesting one AMD GPU
